@@ -29,8 +29,8 @@ const ProfileSettings = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showCoverMenu, setShowCoverMenu] = useState(false);
 
-  const [profileImageUrl, setProfileImageUrl] = useState(null);
-  const [coverImageUrl, setCoverImageUrl] = useState(null);
+  let [profileImageUrl, setProfileImageUrl] = useState(null);
+  let [coverImageUrl, setCoverImageUrl] = useState(null);
 
   const [userDetails,setUserDetails]=useState();
    const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -260,9 +260,9 @@ fetchUserData();
 
 
 
-profileImageUrl = userDetails.profileImageUrl + '?t=' + new Date().getTime();
-coverImageUrl = userDetails.coverImageUrl + '?t=' + new Date().getTime();
-
+profileImageUrl = userDetails?.profileImageUrl + '?t=' + new Date().getTime();
+coverImageUrl = userDetails?.coverImageUrl + '?t=' + new Date().getTime();
+//vinay
 const handleDeletePhoto = async (type) => {
   try {
     let storageRef;
@@ -332,7 +332,7 @@ const handleDeletePhoto = async (type) => {
             <img src={defaultProfileImg} alt="Profile" />
           )}
         <i class={`bi bi-camera ${style.ProfileBi}`} onClick={handleProfileImageClick}></i>
-
+//open github
         </div>
     <div >
          <i class={`bi bi-camera ${style.coverBi} `} onClick={handleCoverImageClick}></i>

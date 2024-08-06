@@ -21,7 +21,7 @@ import SocialProfileSettings from './Dashboard/MenuBarComponents/SettingsCompone
 import Enrolled from './Dashboard/MenuBarComponents/EnrolledCoursesComponent/Enrolled.js';
 import ActiveCourses from './Dashboard/MenuBarComponents/EnrolledCoursesComponent/ActiveCourses.js';
 import CompletedCourses from './Dashboard/MenuBarComponents/EnrolledCoursesComponent/CompletedCourses.js';
-
+import Course from './components/Courses_category/Course.js'
 
 
 
@@ -69,7 +69,9 @@ const App = () => {
             </Route>
           </Routes>
       </BrowserRouter> 
+      <Course/>
  </div>
   );
 };
 export default App;
+
