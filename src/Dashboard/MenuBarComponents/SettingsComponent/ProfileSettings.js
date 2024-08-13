@@ -29,8 +29,8 @@ const ProfileSettings = () => {
   const [showProfileMenu, setShowProfileMenu] = useState(false);
   const [showCoverMenu, setShowCoverMenu] = useState(false);
 
-  let [profileImageUrl, setProfileImageUrl] = useState(null);
-  let [coverImageUrl, setCoverImageUrl] = useState(null);
+  const [profileImageUrl, setProfileImageUrl] = useState(null);
+  const [coverImageUrl, setCoverImageUrl] = useState(null);
 
   const [userDetails,setUserDetails]=useState();
    const [editorState, setEditorState] = useState(EditorState.createEmpty());
@@ -151,119 +151,8 @@ fetchUserData();
     }
   };
 
-  // const handleDeletePhoto = async (type) => {
-  //   try {
-  //     let storageRef;
-  
-  //     if (type === 'profile') {
-  //       if (!userDetails.profileImageUrl) {
-  //         console.error('Error: Profile image URL is not set.');
-  //         return;
-  //       }
-  //       const profileImagePath = userDetails.profileImageUrl.split('?')[0].split('%2F').join('/');
-  //       const profileImageName = profileImagePath.split('/').pop();
-  //       const profileImageFolder = profileImagePath.split('/').slice(0, -1).join('/');
-  //       storageRef = ref(getStorage(), profileImageFolder + '/' + profileImageName);
-  //     } else if (type === 'cover') {
-  //       if (!userDetails.coverImageUrl) {
-  //         console.error('Error: Cover image URL is not set.');
-  //         return;
-  //       }
-  //       const coverImagePath = userDetails.coverImageUrl.split('?')[0].split('%2F').join('/');
-  //       const coverImageName = coverImagePath.split('/').pop();
-  //       const coverImageFolder = coverImagePath.split('/').slice(0, -1).join('/');
-  //       storageRef = ref(getStorage(), coverImageFolder + '/' + coverImageName);
-  //     }
-  
-  //     await deleteObject(storageRef);
-  
-  //     if (type === 'profile') {
-  //       setProfileImageUrl(null);
-  //     } else if (type === 'cover') {
-  //       setCoverImageUrl(null);
-  //     }
-  
-  //     const userRef = doc(db, 'Users', user.uid);
-  //     const userData = await getDoc(userRef);
-  //     const updatedData = { ...userData.data() };
-  
-  //     if (type === 'profile') {
-  //       updatedData.profileImageUrl = null;
-  //     } else if (type === 'cover') {
-  //       updatedData.coverImageUrl = null;
-  //     }
-  
-  //     await setDoc(userRef, updatedData, { merge: true });
-  
-  //     console.log(`${type} image deleted successfully`);
-  //   } catch (error) {
-  //     if (error.code === 'storage/object-not-found') {
-  //       console.error(`Error: The ${type} image does not exist at the specified path.`);
-  //     } else {
-  //       console.error(`Error deleting ${type} image:`,error)
-  //     }
-  //   }
-  // }
-  
 
-
-//   const handleDeletePhoto = async (type) => {
-//   try {
-//     let storageRef;
-
-//     if (type === 'profile') {
-//       if (!userDetails.profileImageUrl) {
-//         console.error('Error: Profile image URL is not set.');
-//         return;
-//       }
-//       const profileImagePath = userDetails.profileImageUrl.split('?')[0].split('%2F').join('/');
-//       const profileImageName = profileImagePath.split('/').pop();
-//       const profileImageFolder = profileImagePath.split('/').slice(0, -1).join('/');
-//       storageRef = ref(getStorage(), profileImageFolder + '/' + profileImageName);
-//     } else if (type === 'cover') {
-//       if (!userDetails.coverImageUrl) {
-//         console.error('Error: Cover image URL is not set.');
-//         return;
-//       }
-//       const coverImagePath = userDetails.coverImageUrl.split('?')[0].split('%2F').join('/');
-//       const coverImageName = coverImagePath.split('/').pop();
-//       const coverImageFolder = coverImagePath.split('/').slice(0, -1).join('/');
-//       storageRef = ref(getStorage(), coverImageFolder + '/' + coverImageName);
-//     }
-
-//     await deleteObject(storageRef);
-
-//     if (type === 'profile') {
-//       await setProfileImageUrl(null);
-//     } else if (type === 'cover') {
-//       await setCoverImageUrl(null);
-//     }
-
-//     const userRef = doc(db, 'Users', user.uid);
-//     const userData = await getDoc(userRef);
-//     const updatedData = { ...userData.data() };
-
-//     if (type === 'profile') {
-//       updatedData.profileImageUrl = null;
-//     } else if (type === 'cover') {
-//       updatedData.coverImageUrl = null;
-//     }
-
-//     await setDoc(userRef, updatedData, { merge: true });
-
-//     console.log(`${type} image deleted successfully`);
-//   } catch (error) {
-//     console.error('Error deleting image:', error);
-//   }
-// };
-
-
-
-
-profileImageUrl = userDetails?.profileImageUrl + '?t=' + new Date().getTime();
-coverImageUrl = userDetails?.coverImageUrl + '?t=' + new Date().getTime();
-//vinay
-const handleDeletePhoto = async (type) => {
+  const handleDeletePhoto = async (type) => {
   try {
     let storageRef;
 
@@ -307,18 +196,12 @@ const handleDeletePhoto = async (type) => {
 
     await setDoc(userRef, updatedData, { merge: true });
 
-    // Force the browser to fetch the new image
-    if (type === 'profile') {
-      userDetails.profileImageUrl = userDetails.profileImageUrl + '?t=' + new Date().getTime();
-    } else if (type === 'cover') {
-      userDetails.coverImageUrl = userDetails.coverImageUrl + '?t=' + new Date().getTime();
-    }
-
     console.log(`${type} image deleted successfully`);
   } catch (error) {
     console.error('Error deleting image:', error);
   }
 };
+
 
   return (
     <div className="container-fluid">
@@ -332,7 +215,6 @@ const handleDeletePhoto = async (type) => {
             <img src={defaultProfileImg} alt="Profile" />
           )}
         <i class={`bi bi-camera ${style.ProfileBi}`} onClick={handleProfileImageClick}></i>
-//open github
         </div>
     <div >
          <i class={`bi bi-camera ${style.coverBi} `} onClick={handleCoverImageClick}></i>
@@ -353,7 +235,9 @@ const handleDeletePhoto = async (type) => {
       <button className="btn btn-primary m-2" onClick={(e) => handleUploadPhoto(e, 'profile')}>
               Upload Photo
             </button>
-      <button className="btn btn-danger m-2" onClick={() =>handleDeletePhoto('profile')}>
+      <button className="btn btn-danger m-2" onClick={(e) =>{
+        e.preventDefault()
+        handleDeletePhoto('profile')}}>
               Delete
             </button>
 
@@ -371,7 +255,9 @@ const handleDeletePhoto = async (type) => {
               Upload Photo
             </button>
           
-          <button className="btn btn-danger m-2" onClick={() => handleDeletePhoto('cover')}>
+          <button className="btn btn-danger m-2" onClick={(e) =>{ 
+            e.preventDefault()
+            handleDeletePhoto('cover')}}>
               Delete
             </button>
           </div>
